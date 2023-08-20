@@ -1,0 +1,31 @@
+<h2>Welcome {{ name }}</h2>
+<app-header></app-header>
+<!-- <app-header></app-header> -->
+<!-- <app-header></app-header> -->
+<!-- {{rooms$ |async |json}} -->
+<div [hidden]="hidden">something</div>
+<div
+  [innerText]="numberOfRoom"
+  [ngStyle]="{ color: numberOfRoom > 0 ? 'red' : '' }"
+></div>
+<button (click)="clickMe()">Click me</button>
+<button (click)="toggle()">Togggle</button>
+
+<div *ngIf="rooms$ | async as rooms">
+  <app-rooms-list
+    [roomList]="rooms"
+    [title]="title"
+    (roomSelected)="selectedRoom($event)"
+  ></app-rooms-list>
+</div>
+<div *ngIf="selectedRooms">
+  {{ selectedRooms | json }}
+</div>
+<div>
+  <button (click)="addRoom()">Add Room</button>
+  <button (click)="editRoom()">Edit Room</button>
+  <button (click)="deleteRoom()">Delete Room</button>
+</div>
+<h2>{{totalByte }}</h2>
+<h3>{{getErrors$ |async}}</h3>
+<h2>{{roomsCount$ |async}}</h2>

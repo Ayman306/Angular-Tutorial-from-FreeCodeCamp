@@ -1,0 +1,22 @@
+<form #roomsForm="ngForm" (ngSubmit)="addRoom(roomsForm)">
+  <div class="form-group">    <input class="form-control" type="text" name="roomType" id="" placeholder="roomtype" [(ngModel)]="room.roomType" required minlength="5">
+</div>
+  <div class="form-group">    <input class="form-control" type="text" name="amenities" id="" placeholder="amenities" [(ngModel)]="room.amenities" required minlength="5" #amenities="ngModel">
+    <div *ngIf="amenities.errors?.['minlength']">
+      <p class="alert">"min length is 5"</p>
+    </div>
+</div>
+  <div class="form-group">    <input class="form-control" type="number" name="price" id="" placeholder="price" [(ngModel)]="room.price" required>
+</div>
+  <div class="form-group">    <input class="form-control" type="datetime" name="checkintime" id="" placeholder="Check in time" [(ngModel)]="room.checkintime" required>
+</div>
+ <div class="form-group">    <input class="form-control" type="datetime" name="checkouttime" id="" placeholder="Check out time" [(ngModel)]="room.checkoutime" required>
+</div>
+  <div >
+    <button [disabled]="roomsForm.invalid"  class="btn btn-primary">Add Room</button>
+  </div>
+</form>
+{{roomsForm.valid |json}}
+<div>
+  <p>{{success}}</p>
+</div>
