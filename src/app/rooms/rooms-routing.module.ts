@@ -8,15 +8,15 @@ const routes: Routes = [
   {
     path: 'rooms',
     component: RoomsComponent,
+    children: [
+      { path: 'addRoom', component: RoomAddComponent },
+      { path: ':roomid', component: RoomsBookingComponent },
+    ],
   },
-  {
-    path: 'rooms/:id',
-    component: RoomsBookingComponent,
-  },
-  {
-    path: 'addRoom',
-    component: RoomAddComponent,
-  },
+  // {
+  //   path: 'rooms/:id',
+  //   component: RoomsBookingComponent,
+  // },
 ];
 
 @NgModule({

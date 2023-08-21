@@ -1,15 +1,29 @@
 <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
-  <div class="form-group" >
+  <div class="form-group">
     <label for="Email">Email address</label>
-    <input #emailControl="ngModel" appEmailvalidator appHover color="purple" type="email" class="form-control" id="Email" aria-describedby="emailHelp" placeholder="Enter email" [(ngModel)]="email">
+    <input
+      #appEmailvalidator="ngModel"
+      appHover
+      color="purple"
+      type="email"
+      class="form-control"
+      placeholder="Enter email"
+      [(ngModel)]="forms.email"
+    />
   </div>
   <div>
-    {{emailControl.errors |json}}
-
+    <!-- {{ emailControl.errors | json }} -->
   </div>
   <div class="form-group">
     <label for="Password">Password</label>
-    <input appHover type="password" class="form-control" id="Password" placeholder="Password" [(ngModel)]="password">
+    <input
+      appHover
+      type="password"
+      class="form-control"
+      id="Password"
+      placeholder="Password"
+      [(ngModel)]="forms.password"
+    />
   </div>
   <div class="form-group">
     <button type="submit" class="btn btn-primary">Submit</button>

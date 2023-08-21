@@ -14,6 +14,7 @@ import { HeaderComponent } from '../header/header.component';
 import { RoomsService } from './services/rooms.service';
 import { Observable, Subject, Subscription, catchError, map, of } from 'rxjs';
 import { HttpEventType } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-rooms',
@@ -75,7 +76,10 @@ export class RoomsComponent
         }
       });
   }
-  constructor(@SkipSelf() private roomsService: RoomsService) {}
+  constructor(
+    @SkipSelf() private roomsService: RoomsService,
+    private route: Router
+  ) {}
   ngAfterViewChecked(): void {
     console.log('After view checked called');
   }
@@ -101,6 +105,7 @@ export class RoomsComponent
     console.log(e);
   }
   addRoom() {
+    this.route.navigateByUrl('rooms/addRoom');
     const room: RoomList = {
       roomNumber: 4,
       roomType: 'Deluxe',
