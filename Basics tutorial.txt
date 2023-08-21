@@ -1,0 +1,250 @@
+main.ts is the entry point for an angular application.[it is mentioned in angular.json file in options main it can be any name]
+
+index.html is the main html file whihc will be served to the user.[it is mentioned in angular.json file in options index it can be any name]
+
+
+mono-repo-
+	create multiple application and deploy multiple application
+	it makes easy to share the code within the project
+
+to bootstrap a class we need atleast 1 root module
+the execution of angular project-
+	first main.ts > bootstrapModule, it has AppModule > 
+
+appModule - 
+	will have 
+	all the components,
+	third party library,
+	BrowserModule is a library available from angular
+	imports-
+		any angular module needs to be imported will be added in imports array
+	declarations-
+		any angular directive,component,pipes are added in declaration array
+
+@NgModule decorator
+	modifies the behaviour of the class
+	it gives all the information about component or directives that are to be used
+
+Bootstrap
+	requires which component needs to load first
+
+
+
+Components are views thatll be render to the users
+
+@Component({
+	selectors:'app-root' //custome html tags to render anywhere in the application
+	templateUrl:"./app.component.html" //for the html template.
+	styleUrls:'/app.component.scss
+
+})
+
+the app-root ['app' can be changed to custome prefixes in angular.json > prefix]
+
+Template Syntax
+	Interpolation-  {{name}} render data value from the ts file
+	Property Binding - [innerText]='variable' assigns the property values
+
+Directives-
+	Used to change behaviour and appearence of the DOM element
+	types-
+		Structural Directive - can modify DOM [ngif,ngfor,ngswitch] it has '*'
+		Attribute Directive - cannot add or remove the element from the DOM
+	Built-in Directive
+		*ngIf -removes DOM element based on condition
+		*ngFor - access the array values into template
+		*ngSwitch - <div *ngSwitch="role">
+  			<div *ngSwitchCase="'admin'">Admin</div>
+  			<div *ngSwitchCase="'user'">User</div>
+  			<div *ngSwitchDefault>Default</div>
+			</div>
+
+Pipes-
+	Used for data transformation [ the og value wont change, only value displayed will chnage]
+	date,uppercae,lowercase,titlecase,currency[default is dollar] , percentage , json, slice [ |slice : 0:2 displays what number of data to be shown], async
+
+\\
+First constructor is called then ngOnInIt.
+constructor must only be used for injection.
+lifeCycle Hooks
+	ngOnInIt- called at the initialise of component
+	ngOnChanges - whenevr we get new values we can get from onchanges b/w parent and child
+	ngDoCheck - checks changes everytime
+	ngAfterViewInit - checked after the view is initialised completely [view child be accessed only on afterviewinint]
+	AfterContentInit - after the content is initialised [the ng content #variable will be used to manipulte the data]
+	ngDestroy - Used to destroy the memory consuming data from the component
+	
+
+
+Component Communication-
+	From parent to child 	
+		@Input decorator in child
+		<app-child [the input variable name] =" the parent ts value to pass"></app-child>
+		
+		@Output decorator in child 
+		 - @Output() roomSelected = new EventEmitter<RoomList>();
+			    this.roomSelected.emit(room);
+		in parent
+	<app-child (the output variable name) =" function($event)"></app-child>
+	
+
+@ViewChild- creates an instance of a component [incase of 1 instanse]
+	- can get the changes in AfterViewInIt()
+		@ViewChild(HeaderComponent, { static: true })headerComponent!: HeaderComponent;
+		
+
+@ViewChildren 
+
+ng-template -
+		A tag which will not render anything, but can be helpful redering other compnents
+
+
+Dependency Injection [Dependency Injection Providers DIP]
+	It can be a class or object that cna be injected into the component
+
+Services- Business logics
+
+DIP types-
+	Class based Providers -passing classes as service
+	Value Providers - passing values as the service[providers in app module providing the constant variable]
+	Factory-
+
+Service FIle contents-
+	@Injectable({
+  providedIn: 'root', \\ it registers itself into the root module ie app module
+})
+
+NullInjector - checks if the service is available or not
+
+Resolution Modifier-
+	@Self()
+	@Optional()
+	@Host()
+
+
+Angular HTTP / Observables
+	import HTTPCLIENTMODULE into app-module
+
+rxjs is a push based data
+Observables are stream of data to wchich we can subscribe
+	observable has closed ,error, next methods
+	internally the observer will observe the values, so incase if value change happens the subscriber will get the updated value
+
+
+RxJs Operators-
+whenever using streams or rxjs for the data use $ ex- getRooms$
+	shareReply - used when the api data never changes and multiple calls are made for the data, this will minimise the api call and render the data, as the data is cached.
+ ex- roomListFunc$ = this.http.get<RoomList[]('api/rooms').pipe(shareReplay(1));
+
+async Pipi-
+	  rooms$ = this.roomsService.roomListFunc$;
+	rooms$ is of the subscription type
+	in html we can use |async to render the data without subscription
+which will be destroye
+ex in html-
+	<div *ngIf="rooms$ | async as rooms">
+  <app-rooms-list
+    [roomList]="rooms"
+    [title]="title"
+    (roomSelected)="selectedRoom($event)"
+  ></app-rooms-list>
+</div>
+
+catchError- handling errors 
+	create a Subject
+  error$: Subject<string> = new Subject<string>();
+ rooms$ = this.roomsService.roomListFunc$.pipe(
+    catchError((err) => {
+      console.log(err);
+      this.error$.next(err.message);
+      return of([]);
+    })
+  );
+whenever the catchError catches the error block, the error$ subject is hit by next()
+  getErrors$ = this.error$.asObservable();
+this will subscribe to the observable
+and on html if we want to access the error block 
+<h3>{{getErrors$ |async}}</h3>
+we have to use the async pipe
+
+
+Map Operator-[modifying the stream ]
+	we can get modified data from the existing stream without subscribing to it ex-   roomsCount$ = this.roomsService.roomListFunc$.pipe(map((res) => res.length));
+
+
+
+Http Interceptor and App_initializer-
+	Interceptor- An intermediar which is in between client and server, it can also listen to the requests. [it can modify request and even the response]
+	Interceptor.ts-
+		HttpInterceptor requires interceptor function
+set headers- request = request.clone({
+      setHeaders: {
+        'Content-Type': 'application/json',
+        token: '1234567899876',
+      },
+    });
+			next.handle(request) //sends request to the server
+	In App module.ts
+		providers:[ {
+      		provide: HTTP_INTERCEPTORS, //http_interceptor is a token
+   		useClass: RequestInterceptor, // tells to add interceptor class to the existing ones built in angular[it will always be sequential]
+		multi: true,
+    		}],
+
+	
+App_Initializer- allows to intercept before the application starts/acts as an entry point. The service is called before the application is initalised
+	on initservice.ts-
+	 config!: any;
+  constructor(private http: HttpClient) {}
+ 	 init() {
+   	 return this.http
+   	   .get('../assets/config.json')
+   	   .pipe(tap((config) => (this.config = config)));
+ 	 }
+to initialise , itll be done on app.module.ts as -
+function initFactory(initservice: InitService) {
+  return () => initservice.init();
+}
+function before the @NgModule
+and needs to be initialised on provider
+		{
+      provide: APP_INITIALIZER,
+      useFactory: initFactory,
+      deps: [InitService],
+      multi: true,
+    },	
+
+
+Routers
+RouterModule provides all the functionality route requires
+<a [routerLink]="'room'">rooms</a>
+if we use href the whole page gets refreshed
+when the routerlink is called the router removes the existing component with required compnent
+
+Activated Routes- needs subscription/provides updated values
+snapshot - doenst need subscription, the value chnaged on the same view doesnt reflect
+
+Router Service- navigate programatically
+	Router.navigateByUrl('')
+
+
+
+
+Forms
+-Template Driven Forms
+-Reactive Forms
+
+form states - pristine, dirty, valid, invalid, touched
+
+Template Driven Forms-
+	import FormsModule in app module imports
+<form #roomsForm="ngForm" (ngSubmit)="addRoom()">
+  <div class="form-group">    
+<input class="form-control" type="text" name="roomType" id="" placeholder="roomtype" [(ngModel)]="room.roomType" required #roomtype>
+</div>
+</form>
+ #roomsForm is a template refrence that can be used for form validation
+#roomType is a field reference for field validation
+
+Custom Directive with Forms- [helper function used to manipulate DOM]
+	directives are similar to component but theyll never have a template
