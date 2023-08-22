@@ -2,13 +2,11 @@
   <div class="form-group">
     <label for="Email">Email address</label>
     <input
-      #appEmailvalidator="ngModel"
-      appHover
-      color="purple"
       type="email"
       class="form-control"
       placeholder="Enter email"
       [(ngModel)]="forms.email"
+      name="email"
     />
   </div>
   <div>
@@ -17,12 +15,12 @@
   <div class="form-group">
     <label for="Password">Password</label>
     <input
-      appHover
       type="password"
       class="form-control"
       id="Password"
       placeholder="Password"
       [(ngModel)]="forms.password"
+      name="password"
     />
   </div>
   <div class="form-group">
