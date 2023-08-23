@@ -9,10 +9,10 @@ mono-repo-
 
 to bootstrap a class we need atleast 1 root module
 the execution of angular project-
-	first main.ts > bootstrapModule, it has AppModule > 
+	first main.ts > bootstrapModule, it has AppModule >
 
-appModule - 
-	will have 
+appModule -
+	will have
 	all the components,
 	third party library,
 	BrowserModule is a library available from angular
@@ -73,27 +73,27 @@ lifeCycle Hooks
 	ngAfterViewInit - checked after the view is initialised completely [view child be accessed only on afterviewinint]
 	AfterContentInit - after the content is initialised [the ng content #variable will be used to manipulte the data]
 	ngDestroy - Used to destroy the memory consuming data from the component
-	
+
 
 
 Component Communication-
-	From parent to child 	
+	From parent to child
 		@Input decorator in child
 		<app-child [the input variable name] =" the parent ts value to pass"></app-child>
-		
-		@Output decorator in child 
+
+		@Output decorator in child
 		 - @Output() roomSelected = new EventEmitter<RoomList>();
 			    this.roomSelected.emit(room);
 		in parent
 	<app-child (the output variable name) =" function($event)"></app-child>
-	
+
 
 @ViewChild- creates an instance of a component [incase of 1 instanse]
 	- can get the changes in AfterViewInIt()
 		@ViewChild(HeaderComponent, { static: true })headerComponent!: HeaderComponent;
-		
 
-@ViewChildren 
+
+@ViewChildren
 
 ng-template -
 		A tag which will not render anything, but can be helpful redering other compnents
@@ -150,7 +150,7 @@ ex in html-
   ></app-rooms-list>
 </div>
 
-catchError- handling errors 
+catchError- handling errors
 	create a Subject
   error$: Subject<string> = new Subject<string>();
  rooms$ = this.roomsService.roomListFunc$.pipe(
@@ -163,7 +163,7 @@ catchError- handling errors
 whenever the catchError catches the error block, the error$ subject is hit by next()
   getErrors$ = this.error$.asObservable();
 this will subscribe to the observable
-and on html if we want to access the error block 
+and on html if we want to access the error block
 <h3>{{getErrors$ |async}}</h3>
 we have to use the async pipe
 
@@ -191,7 +191,7 @@ set headers- request = request.clone({
 		multi: true,
     		}],
 
-	
+
 App_Initializer- allows to intercept before the application starts/acts as an entry point. The service is called before the application is initalised
 	on initservice.ts-
 	 config!: any;
@@ -212,7 +212,7 @@ and needs to be initialised on provider
       useFactory: initFactory,
       deps: [InitService],
       multi: true,
-    },	
+    },
 
 
 Routers
@@ -239,7 +239,7 @@ form states - pristine, dirty, valid, invalid, touched
 Template Driven Forms-
 	import FormsModule in app module imports
 <form #roomsForm="ngForm" (ngSubmit)="addRoom()">
-  <div class="form-group">    
+  <div class="form-group">
 <input class="form-control" type="text" name="roomType" id="" placeholder="roomtype" [(ngModel)]="room.roomType" required #roomtype>
 </div>
 </form>
@@ -248,3 +248,33 @@ Template Driven Forms-
 
 Custom Directive with Forms- [helper function used to manipulate DOM]
 	directives are similar to component but theyll never have a template
+
+Router Guards
+
+  CanActivate
+  Canload
+  CanActivateChild
+  CanDeactivate
+  guard returns
+  route:ActivatedRouteSnapshot
+  state: RouterStateSnapshot as Observable or UrlTree or promisses
+
+@Injectable({providn:'root'})
+  canActivate(route:ActivatedRouteSnapshot
+  state: RouterStateSnapshot as Observable or UrlTree or promisses){
+    return true // the route depends on this
+  }
+
+CanActivateChild - the guard is set to the child routes of the parent component
+canLoad() - checks if the guard can load the partiular route [for lazy loaded component itll check ]
+
+
+
+Reactive Forms -[gives more control on forms]
+1) import ReactiveFormsModule from '@angular/forms' into your App Module Imports
+2) create an instance of FormGroup and pass it's values to the constructor
+3) add Validators to each FormControl
+4) use ngModel directive to bind data to input fields
+5) Create FormArray using new FormArray([...])
+6) Use push method to add items dynamically
+

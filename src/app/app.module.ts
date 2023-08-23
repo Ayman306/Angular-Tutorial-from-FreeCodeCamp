@@ -18,7 +18,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { HoverDirective } from './directive/hover.directive';
 import { EmailvalidatorDirective } from './directive/emailvalidator.directive';
@@ -53,6 +53,7 @@ function initFactory(initservice: InitService) {
     MatListModule,
     FormsModule,
     HeaderModule,
+    ReactiveFormsModule,
   ],
   providers: [
     {
