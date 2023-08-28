@@ -1,9 +1,14 @@
 <h2>Welcome {{ name }}</h2>
+<h2 appCustomStyle>Welcome custome directive</h2>
+
 <app-header></app-header>
 <!-- <app-header></app-header> -->
 <!-- <app-header></app-header> -->
 <!-- {{rooms$ |async |json}} -->
 <div [hidden]="hidden">something</div>
+<div><h2>{{2 | usdInr:70 :2}}</h2></div>
+<div><h2>{{[1,8,2,4,9,3] | sort}}</h2></div>
+<div appHoverBg>Hover bg directive used</div>
 <div
   [innerText]="numberOfRoom"
   [ngStyle]="{ color: numberOfRoom > 0 ? 'red' : '' }"

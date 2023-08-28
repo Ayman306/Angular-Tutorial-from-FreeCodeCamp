@@ -25,6 +25,10 @@ import { EmailvalidatorDirective } from './directive/emailvalidator.directive';
 import { RoomsModule } from './rooms/rooms.module';
 import { HeaderModule } from './header/header.module';
 import { RouteConfigToken } from './rooms/services/route-config.service';
+import { UsdInrPipe } from './pipes/usd-inr.pipe';
+import { SortPipe } from './pipes/sort.pipe';
+import { CustomStyleDirective } from './directive/custom-style.directive';
+import { HoverBgDirective } from './directive/hover-bg.directive';
 
 function initFactory(initservice: InitService) {
   return () => initservice.init();
