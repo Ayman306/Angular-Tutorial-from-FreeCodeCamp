@@ -9,6 +9,12 @@
 <div><h2>{{2 | usdInr:70 :2}}</h2></div>
 <div><h2>{{[1,8,2,4,9,3] | sort}}</h2></div>
 <div appHoverBg>Hover bg directive used</div>
+<div>
+  {{random$ |async |json}}
+
+  <h2>{{random$.value | async}}</h2>
+</div>
+<div><h3>Async pipe {{time | async |date:'medium'}}</h3></div>
 <div
   [innerText]="numberOfRoom"
   [ngStyle]="{ color: numberOfRoom > 0 ? 'red' : '' }"

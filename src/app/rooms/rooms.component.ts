@@ -12,7 +12,7 @@ import {
 import { RoomList, Rooms } from '../Interface/rooms';
 import { HeaderComponent } from '../header/header.component';
 import { RoomsService } from './services/rooms.service';
-import { Observable, Subject, Subscription, catchError, map, of } from 'rxjs';
+import { Observable, Subject, Subscription, catchError, map, of, tap } from 'rxjs';
 import { HttpEventType } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -34,6 +34,13 @@ export class RoomsComponent
   totalByte: number = 0;
   subscription!: Subscription;
   error$: Subject<string> = new Subject<string>();
+  random$:any=this.roomsService.randomFunc().pipe(map((res:any)=>res.value),
+  catchError(err=>{
+    console.log(err.error.message,"llllllllllllllllllll");
+   return of(err.error.message)
+
+  })
+  )
   // rooms$ = this.roomsService.roomListFunc$;
   rooms$ = this.roomsService.roomListFunc$.pipe(
     catchError((err) => {
@@ -44,9 +51,15 @@ export class RoomsComponent
   );
   roomsCount$ = this.roomsService.roomListFunc$.pipe(map((res) => res.length));
   getErrors$ = this.error$.asObservable();
+  time!:Observable<any>
   ngOnInit(): void {
     this.stream.subscribe((data) => {
       console.log(data);
+    });
+    this.time = new Observable((observer) => {
+      setInterval(() => {
+        observer.next(new Date().toString());
+      }, 1000);
     });
     // this.roomsService.roomListFunc$.subscribe((res) => {
     //   this.roomList = res;

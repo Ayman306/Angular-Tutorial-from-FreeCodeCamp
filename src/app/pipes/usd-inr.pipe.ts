@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'usdInr',
-  pure: false,
+  pure: true,
 
 })
 export class UsdInrPipe implements PipeTransform {

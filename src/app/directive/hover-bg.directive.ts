@@ -11,6 +11,10 @@ export class HoverBgDirective {
     this.el.nativeElement.style.backgroundColor = 'red';
     this.el.nativeElement.style.color="white"
   }
+  @HostListener("mouseenter")  mouseHover1(){
+    this.el.nativeElement.style.backgroundColor = 'pink';
+    this.el.nativeElement.style.color="white"
+  }
   @HostListener('mouseleave') mouseOut(){
     this.el.nativeElement.style.backgroundColor='white'
     this.el.nativeElement.style.color="black"
