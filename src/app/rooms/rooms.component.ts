@@ -34,9 +34,10 @@ export class RoomsComponent
   totalByte: number = 0;
   subscription!: Subscription;
   error$: Subject<string> = new Subject<string>();
-  random$:any=this.roomsService.randomFunc().pipe(map((res:any)=>res.value),
+  random$: any = this.roomsService.randomFunc().pipe(
+    map((res: any) => res.value),
   catchError(err=>{
-    console.log(err.error.message,"llllllllllllllllllll");
+    console.log(err.error.error,"llllllllllllllllllll");
    return of(err.error.message)
 
   })

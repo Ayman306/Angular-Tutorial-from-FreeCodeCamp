@@ -27,3 +27,18 @@
     <button type="submit" class="btn btn-primary">Submit</button>
   </div>
 </form>
+
+
+<form [formGroup]="food" (ngSubmit)="foodSubmit()">
+  <input type="text" formControlName="Food_type" placeholder="food type">
+  <input type="text" formControlName="Quantity" placeholder="Quantity">
+  <div formGroupName="Address">
+    <input type="text" name="" id="" formControlName="street" placeholder="street">
+  </div>
+  <div *ngFor="let item of get().controls; let i=index" formArrayName="Pnumber">
+    <input  type="number" name="" id="" [formControlName]="i" placeholder="Pnumber">
+    <button (click)="remove(i)">remove</button>
+  </div>
+  <button type="submit">Submit</button>
+</form>
+<button (click)="add()">Add</button>

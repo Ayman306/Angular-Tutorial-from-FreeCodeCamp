@@ -27,7 +27,7 @@ export class RoomsService {
 
   roomList: RoomList[] = [];
   randomFunc(){
-    return this.http.get('https://api.chucknorris.io/jokes/randomsp')
+    return this.http.get('https://api.chucknorris.io/jokes/random')
   }
   roomListFunc() {
     // const header = new HttpHeaders({

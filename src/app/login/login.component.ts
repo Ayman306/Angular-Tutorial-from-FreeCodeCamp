@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginServiceService } from './login-service.service';
-import { NgForm, NgModel } from '@angular/forms';
+import { FormArray, FormBuilder, NgForm, NgModel, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -17,8 +17,34 @@ export class LoginComponent {
   };
   constructor(
     private route: Router,
-    private loginService: LoginServiceService
-  ) {}
+    private loginService: LoginServiceService,
+    private fb:FormBuilder
+  ) { }
+  food = this.fb.group({
+    Food_type: ['', ],
+    Quantity: ['',  ],
+    Address: this.fb.group({
+      street: ['',  ]
+    }),
+
+    Pnumber: this.fb.array([
+  ])
+  })
+
+  get() {
+    return this.food.controls.Pnumber as FormArray
+  }
+  add() {
+    this.get().push(this.fb.control('',  ))
+  }
+  remove(id:number) {
+    this.get().removeAt(id)
+  }
+
+  foodSubmit() {
+    console.log(this.food.value,"Values");
+
+  }
   login(form: NgForm) {
     console.log(form, 'ppppppppppppppppppppppppp');
 
