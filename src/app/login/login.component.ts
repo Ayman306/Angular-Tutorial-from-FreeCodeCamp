@@ -37,6 +37,12 @@ export class LoginComponent {
   add() {
     this.get().push(this.fb.control('',  ))
   }
+  // addControl() {
+  //   return this.fb.array([
+  //     { 'Food': [''] },
+  //     { 'Quantity': [''] }
+  //   ])
+  // }
   remove(id:number) {
     this.get().removeAt(id)
   }

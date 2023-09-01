@@ -15,11 +15,15 @@ import { RoomsService } from './services/rooms.service';
 import { Observable, Subject, Subscription, catchError, map, of, tap } from 'rxjs';
 import { HttpEventType } from '@angular/common/http';
 import { Router } from '@angular/router';
-
+import { trigger } from '@angular/animations';
+import { fadeIn, slideInOut } from './services/animation';
 @Component({
   selector: 'app-rooms',
   templateUrl: './rooms.component.html',
   styleUrls: ['./rooms.component.scss'],
+  // encapsulation
+  // changeDetection
+  animations:[fadeIn,slideInOut]
 })
 export class RoomsComponent
   implements OnInit, DoCheck, AfterViewInit, AfterViewChecked

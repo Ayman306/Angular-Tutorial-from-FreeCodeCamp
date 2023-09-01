@@ -131,6 +131,51 @@ Observables are stream of data to wchich we can subscribe
 	internally the observer will observe the values, so incase if value change happens the subscriber will get the updated value
 
 
+
+ #Observables
+ observable is like a stream which emits values over time
+ Observable<number> obs$;
+ obs$.subscribe(v =>{console.log(`Value emitted ${v}`)})
+ this way you subscribe for changes in that observable
+ obs$.next(5)//emitting new value
+ obs$.complete();//completing the subscription
+ obs$.error(err);//throwing error
+ obs$.unsubscribe();//unsubscribing from the observable
+ observable can also emit multiple values at once
+ obs$.pipe().subscribe(...)
+ obs$.asap().subscribe(...); //emits next immediately after subscribing
+ obs$.auditTime(10).subscribe(...); //emits only if there are no other events within 10ms
+ obs$.bufferCount(3,...).subscribe(...); //collects all three latest values into one array
+ obs$.bufferTime(20,...).subscribe(...); //collects all values until it sees another event occuring in less than 20
+ obs$.catchError(e=>{}).subscribe(...); //catches errors thrown by source observable
+ obs$.combineLatest([obs2$,obs4$]).subscribe(...); //combines two streams based on their index
+ obs$.concatMap(x=>of(x)).subscribe(...); //maps each item to another observable then concats them together
+ obs$.count().subscribe(...); //counts how many items were emitted so far
+ obs$.debounceTime(10).subscribe(...); //waits until last emission before emitting any more
+ obs$.defaultIfEmpty(-98765).subscribe(...); //if empty emits default value otherwise emits first value
+ obs$.delayWhen((value,index)=>timer(10)) .subscribe(...); //delays emission of value by given amount of milliseconds
+ obs$.delayWhen((value,index)=>timer(10*index)); //delays every emission by given amount of milliseconds
+ obs$.distinctUntilChanged().subscribe(...); //only emits when value changed
+ obs$.doOnNext(v => console.log(`${v}`)) .subscribe() ; //prints out each value
+ obs$.elementAt(i) .subscribe() ; //returns element at i position
+ obs$.every(v=>true).subscribe(...); //checks whether every value satisfies predicate
+ obs$.exhaust().subscribe(...); //ignores subsequent values while previous ones are still being processed
+ obs$.expand(item=>of(item+1),-Infinity).subscribe(...); //expands an observable sequence recursively
+ obs$.filter(v=>false).subscribe(...); //filters out some elements
+ obs$.first().subscribe(...); //gets first value and completes
+ obs$.groupBy(keySelector,(a,b)=>{return {...}}).subscribe(...); //groups values according to key selector
+ obs$.ignoreElements().subscribe(...); //ignores all values
+ obs$.isEmpty().subscribe(...); //checks wheter it has been completed without emitting anything yet
+ obs$.last().subscribe(...); //gets last value and completes
+ obs$.let(o=>o.mapTo({})).subscribe(...); //converts type of data
+ obs$.materialize().subscribe(...); //turns emmited values into notifications (onCompleted|onError|onNext)
+ obs$.max().subscribe(...); //find maximal value
+ obs$.mergeAll().subscribe(...); //merges nested observable sequences into single observable
+ obs$.min().subscribe(...); //find minimal value
+ obs$.multicast(()=>new Subject()).subscribe(...); //shares underlying subject between observers
+
+
+
 RxJs Operators-
 whenever using streams or rxjs for the data use $ ex- getRooms$
 	shareReply - used when the api data never changes and multiple calls are made for the data, this will minimise the api call and render the data, as the data is cached.
@@ -317,3 +362,26 @@ here the array is manipulated thus its an impure pipe
 @HostListner()
 Listns to the DOM event on the host element [eleent whihc has implemented the directive]
 and reacts according to the event and event handlers method.
+
+
+#Signals
+  Angular checks the change detection with zone.js which checks all the components for any changes which can lead to slow down of settings_applications
+  signals on other hand provides a medium to check for the change detection, it detects the changes where its only required
+
+defining signal
+  firstName=signal("initial value")initial vlaue is mandatory
+
+ set value to a signal
+ firstName.set('new value')
+
+ update value to a signal
+ firstName.update(()=>{})//this function will be called with current value of signal as argument
+
+ get value from a signal
+ let val =firstName.get();
+
+ mutate value to a signal
+ mainly used to update/ mutate the arry or objects
+ firstName.mutate(val=>{...});
+
+

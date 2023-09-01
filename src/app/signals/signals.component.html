@@ -1,0 +1,107 @@
+<h2>Signals set(), compute()</h2>
+<div class="row">
+  <div class="col-4 p-0">
+
+
+    <div class="input-group input-group-lg">
+      <span class="input-group-text" id="inputGroup-sizing-lg">First Name</span>
+      <input type="text" #fName class="form-control" aria-label="Sizing example input"
+        aria-describedby="inputGroup-sizing-sm" [value]="firstName()">
+      <button class="btn btn-primary" (click)="changeFirstName(fName.value)">change first name</button>
+    </div>
+  </div>
+  <div class="col-4 p-0">
+    <div class="input-group input-group-lg">
+      <span class="input-group-text" id="inputGroup-sizing-lg">Last Name</span>
+      <input type="text" #lname class="form-control" aria-label="Sizing example input"
+        aria-describedby="inputGroup-sizing-sm" [value]="lastName()">
+      <button class="btn btn-primary" (click)="changeLastName(lname.value)">change last name</button>
+    </div>
+  </div>
+</div>
+<div class="col-4 p-0">
+
+  <div class="input-group input-group-lg">
+    <span class="input-group-text" id="inputGroup-sizing-sm">Full Name</span>
+    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"
+      [value]="fullName()">
+  </div>
+</div>
+
+<h2>Signals update()</h2>
+<div>
+  <h3>Qty</h3>
+</div>
+<div class="row">
+  <div class="col-6">
+    <div class="row">
+      <div class="col-2">
+        <button class="btn-primary btn" (click)="increase()">+</button>
+      </div>
+      <div class="col-2">{{qty()}}</div>
+      <div class="col-2"><button class="btn-danger btn" (click)="decrease()">-</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-6"></div>
+</div>
+
+<h2>Signals mutate() Array</h2>
+<div>
+  <h3>Employees</h3>
+  <table class="table" *ngFor="let item of employees()">
+    <tr class="row">
+      <td class="col-4">{{item.name}}</td>
+      <td>{{item.position}}</td>
+
+      <td>{{item.department}}</td>
+
+    </tr>
+  </table>
+  <!-- <div *ngIf="display">
+  <div>
+    <form [formGroup]="empForm">
+      <div *ngFor="let empForm of get().controls; let i=index">
+        <div formArrayName="details[0]">
+          <input type="text" formControlName="name" placeholder="name">
+          <input type="text" formControlName="position" placeholder="position">
+          <input type="text" formControlName="department" placeholder="department">
+
+        </div>
+        <button (click)="remove(i)">remove</button>
+      </div>
+    </form>
+  </div>
+  <div>
+    <button (click)="addEmp(employeeForm)">Submit</button>
+    <button (click)="add()">Add employee</button>
+  </div>
+</div>
+<div> -->
+  <form action="" [formGroup]="employeeForm" (ngSubmit)="addEmp(employeeForm)">
+    <input type="text" formControlName="name" placeholder="name">
+    <input type="text" formControlName="position" placeholder="position">
+    <input type="text" formControlName="department" placeholder="department" id="">
+    <button type="submit">Add employee</button>
+  </form>
+</div>
+
+<h2>Signals mutate() Objects</h2>
+<p>Electronics list</p>
+<div>
+  <ul>
+    <li>
+      {{electronics().name}}
+    </li>
+      <ul>
+        <li *ngFor="let prod of electronics().products">
+
+          {{prod.name}}
+          {{prod.price}}
+        </li>
+      </ul>
+  </ul>
+  <button (click)="changeProduct()">Chang price </button>
+</div>
+
+<h2>signal effect()</h2>

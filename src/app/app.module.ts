@@ -29,6 +29,7 @@ import { UsdInrPipe } from './pipes/usd-inr.pipe';
 import { SortPipe } from './pipes/sort.pipe';
 import { CustomStyleDirective } from './directive/custom-style.directive';
 import { HoverBgDirective } from './directive/hover-bg.directive';
+import { SignalsComponent } from './signals/signals.component';
 
 function initFactory(initservice: InitService) {
   return () => initservice.init();
@@ -43,6 +44,7 @@ function initFactory(initservice: InitService) {
     LoginComponent,
     HoverDirective,
     EmailvalidatorDirective,
+    SignalsComponent,
   ],
   imports: [
     BrowserModule,

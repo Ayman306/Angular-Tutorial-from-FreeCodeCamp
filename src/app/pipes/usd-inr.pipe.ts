@@ -13,3 +13,4 @@ export class UsdInrPipe implements PipeTransform {
   }
 
 }
+//diffrence in the DOM on using pipe

@@ -1,3 +1,4 @@
+<h1>Login</h1>
 <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
   <div class="form-group">
     <label for="Email">Email address</label>
@@ -28,7 +29,7 @@
   </div>
 </form>
 
-
+<h1>Form Array</h1>
 <form [formGroup]="food" (ngSubmit)="foodSubmit()">
   <input type="text" formControlName="Food_type" placeholder="food type">
   <input type="text" formControlName="Quantity" placeholder="Quantity">
@@ -42,3 +43,7 @@
   <button type="submit">Submit</button>
 </form>
 <button (click)="add()">Add</button>
+
+
+<h2>Signals</h2>
+<app-signals></app-signals>
