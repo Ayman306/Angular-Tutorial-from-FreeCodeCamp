@@ -340,11 +340,12 @@ export class UsdInrPipe implements PipeTransform {
 }
 @Pipe({
   name:'nameOfPipe',
-  pure:false //by default its false,
+  pure:false //by default its true,
 })
 in html we can add in {{12 | nameOfPipe:agrs}}
 declare it in modules declarations
 We can create impure pipes to re-render templates when an object’s content like object properties or array entries change.
+Pupre pipe focusses on the changes on parameter or value
 
 import { Pipe, PipeTransform } from "@angular/core";
 
@@ -358,6 +359,7 @@ export class SortedPipe implements PipeTransform {
   }
 }
 here the array is manipulated thus its an impure pipe
+impure pipe focusses on chnages happening on the component, itll execute everytime on detecting the changes, itll give performance issues.
 
 @HostListner()
 Listns to the DOM event on the host element [eleent whihc has implemented the directive]
